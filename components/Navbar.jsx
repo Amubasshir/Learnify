@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Button from './Button';
 
 const Navbar = () => {
   return (
@@ -22,7 +23,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div>
-          <Link href="/">Sign in</Link>
+          <Button href="/login" placeholder="Sign in" />
         </div>
       </div>
     </div>
