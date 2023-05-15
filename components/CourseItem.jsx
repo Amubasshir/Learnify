@@ -26,7 +26,7 @@ const CourseItem = ({ course }) => {
               {course.instructor}
             </span>
           </span>
-          <span>duration: {course.duration}</span>
+          <span className="text-black">duration: {course.duration}</span>
         </p>
         <div className="flex gap-5">
           <p className="flex items-center gap-5">
@@ -38,12 +38,19 @@ const CourseItem = ({ course }) => {
                 <AiOutlineStar />
               </span>
             </span>
-            <span>Students: {course.students}</span>
+            <span className="text-black">Students: {course.students}</span>
           </p>
-          <p>Price: {currencyConverter(course.price, 'en-GB', 'EUR')}</p>
+          <p className="">
+            Price: {currencyConverter(course.price, 'en-GB', 'EUR')}
+          </p>
         </div>
         <div>
-          <Button href={`/courses/${course.id}`} placeholder="View Course" />
+          <Button
+            href={`/courses/${course.id}`}
+            placeholder="View Course"
+            color="primary"
+            size="full"
+          />
         </div>
       </div>
     </div>
