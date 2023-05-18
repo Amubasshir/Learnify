@@ -29,7 +29,10 @@ const CourseDetails = ({ course }) => {
             <span className="font-semibold">Price:</span>
             {currencyConverter(course.price, 'en-GB', 'EUR')}
           </p>
-          <Button href="/checkout" placeholder="Enroll Now"></Button>
+          <Button
+            href={`/checkout/${course.id}`}
+            placeholder="Enroll Now"
+          ></Button>
         </div>
       </div>
     </div>
