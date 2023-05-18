@@ -1,8 +1,20 @@
-import Button from 'componemt/components/Button';
 import { getSingleCourse } from 'componemt/prisma/courses';
 import { currencyConverter } from 'componemt/utils/currencyconverter';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const CourseDetails = ({ course }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleEnroll = () => {
+    if (session) {
+      router.push(`/checkout/${course.id}`);
+    } else {
+      router.push(`/users/login?destination=/checkout/${course.id}`);
+    }
+  };
+
   return (
     <div className="course-details wrapper py-10 min-h-screen">
       <div
@@ -29,10 +41,12 @@ const CourseDetails = ({ course }) => {
             <span className="font-semibold">Price:</span>
             {currencyConverter(course.price, 'en-GB', 'EUR')}
           </p>
-          <Button
-            href={`/checkout/${course.id}`}
-            placeholder="Enroll Now"
-          ></Button>
+          <button
+            onClick={handleEnroll}
+            className="bg-black text-white rounded-lg py-3 px-6 w-full lg:w-2/4"
+          >
+            Enroll Now
+          </button>
         </div>
       </div>
     </div>
