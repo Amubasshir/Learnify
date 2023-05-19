@@ -1,7 +1,12 @@
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 import SectionTitle from 'componemt/components/SectionTitle';
 import { getSingleCourse } from 'componemt/prisma/courses';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+
+//* STRIPE PROMISE
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const Checkout = ({ course }) => {
   const { data: session } = useSession();
@@ -24,6 +29,30 @@ const Checkout = ({ course }) => {
     }
   }, [session]);
 
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    const stripe = await stripePromise;
+
+    // SEND A POST request TO THE SERVER
+    const checkoutSession = await axios.post('/api/create-checkout-session', {
+      items: [course],
+      name: formData.name,
+      email: formData.email,
+      mobile: formData.mobile,
+      address: formData.address,
+      courseTitle: formData.title,
+    });
+
+    // REDIRECT TO THE STRIPE PAYMENT
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    }
+  };
+
   return (
     <div className="wrapper py-10 min-h-screen">
       <SectionTitle
@@ -34,7 +63,10 @@ const Checkout = ({ course }) => {
         }
       />
       <div className="flex justify-center">
-        <form className="flex flex-col gap-5 mt-10 w-full lg:w-[36rem]">
+        <form
+          onSubmit={handleCheckout}
+          className="flex flex-col gap-5 mt-10 w-full lg:w-[36rem]"
+        >
           <div className="form-control flex flex-col gap-2">
             <label htmlFor="name" className="cursor-pointer">
               Name
@@ -74,6 +106,7 @@ const Checkout = ({ course }) => {
               onChange={(e) =>
                 setFormData({ ...formData, mobile: e.target.value })
               }
+              required
             />
           </div>
           <div className="form-control flex flex-col gap-2">
@@ -89,6 +122,7 @@ const Checkout = ({ course }) => {
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
               }
+              required
             />
           </div>
           <div className="form-control flex flex-col gap-2">
@@ -106,7 +140,7 @@ const Checkout = ({ course }) => {
           </div>
           <div className="form-control flex flex-col gap-2">
             <label htmlFor="price" className="cursor-pointer">
-              Price €
+              Price (EUR)
             </label>
             <input
               className="outline-none border py-3 px-4 shadow-sm rounded-lg focus:border-gray-500"
@@ -117,7 +151,11 @@ const Checkout = ({ course }) => {
               value={formData.price}
             />
           </div>
-          <button className="bg-black py-4 px-3 rounded-lg text-white uppercase">
+          <button
+            role="link"
+            type="submit"
+            className="bg-black py-4 px-3 rounded-lg text-white uppercase"
+          >
             Proceed To Checkout
           </button>
         </form>
