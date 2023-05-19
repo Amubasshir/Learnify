@@ -4,7 +4,7 @@ const SectionTitle = ({ span, h2, p }) => {
       <span className="uppercase text-sm font-bold tracking-widest">
         {span}
       </span>
-      <h2 className="text-6xl">{h2}</h2>
+      <h2 className="text-2xl lg:text-5xl">{h2}</h2>
       <p className="w-3/5 text-gray-700">{p}</p>
     </div>
   );
