@@ -4,10 +4,10 @@ async function createStripeCheckout(req, res) {
   const { items, name, email, mobile, address, courseTitle, courseId } =
     req.body;
 
-  const transformItems = items.map((item) => ({
+  const transformedItems = items.map((item) => ({
     quantity: 1,
     price_data: {
-      currency: 'EUR',
+      currency: 'USD',
       unit_amount: +(item.price * 100).toFixed(2),
       product_data: {
         name: item.title,
@@ -19,7 +19,7 @@ async function createStripeCheckout(req, res) {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    line_items: transformItems,
+    line_items: transformedItems,
     mode: 'payment',
     success_url: `${process.env.HOST}/success`,
     cancel_url: `${process.env.HOST}`,
@@ -30,6 +30,7 @@ async function createStripeCheckout(req, res) {
       address,
       courseTitle,
       courseId,
+      images: JSON.stringify(items.map((item) => item.cover)),
     },
   });
 

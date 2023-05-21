@@ -5,12 +5,13 @@ import '../../preserve.entity.config.json';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 
-const fullFillOrder = async (session) => {
-  console.log(`☑️ ORDER PLACED SUCCESS: ${session.id}`);
+const fullfillOrder = async (session) => {
+  console.log(`✅ ORDER PLACED SUCCESS: ${session.id}`);
 
   let user = await prisma.user.findUnique({
     where: { email: session.metadata.email },
   });
+
   if (!user) {
     user = await prisma.user.create({
       data: {
@@ -22,7 +23,7 @@ const fullFillOrder = async (session) => {
   await prisma.order.create({
     data: {
       transactionId: session.id,
-      amountTotal: session.amount.total / 100,
+      amountTotal: session.amount_total / 100,
       name: session.metadata.name,
       mobile: session.metadata.mobile,
       address: session.metadata.address,
@@ -33,7 +34,6 @@ const fullFillOrder = async (session) => {
       },
     },
   });
-
   return;
 };
 
@@ -56,13 +56,13 @@ async function webhook(req, res) {
       const session = event.data.object;
 
       try {
-        await fullFillOrder(session);
+        await fullfillOrder(session);
       } catch (err) {
         console.log(`❌ DB ERROR`, err.message);
         return res.status(400).send(`DB ERROR: ${err.message}`);
       }
 
-      console.log(`☑️ DATA UPLOADED:`, session.id);
+      console.log(`✅ DATA UPLOADED:`, session.id);
       return res.status(200).send(`DATA UPLOADED: ${session.id}`);
     }
   }
