@@ -23,8 +23,8 @@ const SuccessPage = ({ session }) => {
         <h2 className="text-3xl flex items-center gap-2">
           <span className="text-emerald-500">
             <AiOutlineCheckCircle />
-          </span>{' '}
-          {"You've entrolled successfully!"}
+          </span>
+          {'Your enrolement is successful!'}
         </h2>
         <Button href="/orders" placeholder="Got to your orders" />
       </div>
