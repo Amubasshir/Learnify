@@ -7,6 +7,7 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 
 const fullfillOrder = async (session) => {
   console.log(`✅ ORDER PLACED SUCCESS: ${session.id}`);
+  console.log(session.metadata.courseTitle);
 
   let user = await prisma.user.findUnique({
     where: { email: session.metadata.email },

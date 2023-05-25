@@ -33,6 +33,7 @@ const Checkout = ({ course }) => {
     e.preventDefault();
     const stripe = await stripePromise;
 
+    console.log(formData.courseTitle);
     // SEND A POST request TO THE SERVER
     const checkoutSession = await axios.post('/api/create-checkout-session', {
       items: [course],
@@ -40,7 +41,7 @@ const Checkout = ({ course }) => {
       email: formData.email,
       mobile: formData.mobile,
       address: formData.address,
-      courseTitle: formData.title,
+      courseTitle: formData.courseTitle,
       courseId: course.id,
     });
 
