@@ -7,6 +7,9 @@ const nextConfig = {
       'miro.medium.com',
       'process.fs.teachablecdn.com',
       'lh3.googleusercontent.com',
+      'img-c.udemycdn.com',
+      'i0.wp.com',
+      'blog.logrocket.com',
     ],
   },
 };

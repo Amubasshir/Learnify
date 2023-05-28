@@ -1,6 +1,6 @@
 export const getTransition = (
   delay = 0,
-  duration = 0.5,
+  duration = 0.9,
   ease = 'easeInOut'
 ) => {
   return {
