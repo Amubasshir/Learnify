@@ -25,7 +25,7 @@ const OrdersPage = ({ session, customer }) => {
         {customer.orders.length > 1 ? 's' : ''}
       </h2>
 
-      <div className="courses flex flex-wrap gap-10">
+      <div className="courses  flex flex-wrap gap-10">
         {customer.orders.map((course) => (
           <div
             key={course.id}
