@@ -1,4 +1,7 @@
-import { useSession } from 'next-auth/react';
+import { getTransition, shutterDown, shutterUp } from 'componemt/utils/motion';
+import { motion } from 'framer-motion';
+import { getSession, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import Button from './Button';
 
@@ -7,11 +10,24 @@ const Navbar = () => {
 
   return (
     <div className="navbar h-20 bg-black text-gray-400 flex items-center">
-      <div className="wrapper flex justify-between items-center">
-        <Link href="/" className="text-white font-semibold">
-          Learnify
-        </Link>
-        <div className="flex gap-5">
+      <div className="wrapper flex justify-between items-center overflow-hidden">
+        <motion.div
+          variants={shutterDown()}
+          initial="from"
+          animate="to"
+          transition={getTransition()}
+        >
+          <Link href="/" className="text-white font-semibold">
+            Learnify
+          </Link>
+        </motion.div>
+        <motion.div
+          variants={shutterUp()}
+          initial="from"
+          animate="to"
+          transition={getTransition()}
+          className="flex gap-5"
+        >
           <Link href="/" className="hover:text-white transition-colors">
             Home
           </Link>
@@ -29,21 +45,32 @@ const Navbar = () => {
           <Link href="/contact" className="hover:text-white transition-colors">
             Contact
           </Link>
-        </div>
+        </motion.div>
         <div>
-          {!session ? (
-            <Button
-              href="/users/login"
-              placeholder="Sign in"
-              color="secondary"
-            />
-          ) : (
-            <Button
-              href="/users/profile"
-              placeholder="Profile"
-              color="secondary"
-            />
-          )}
+          <motion.div
+            variants={shutterDown()}
+            initial="from"
+            animate="to"
+            transition={getTransition()}
+          >
+            {!session ? (
+              <Button
+                href="/users/login"
+                placeholder="Sign in"
+                color="secondary"
+              />
+            ) : (
+              <Link href="/users/profile">
+                <Image
+                  src={session?.user.image}
+                  width={37}
+                  height={37}
+                  className="rounded-full"
+                  alt="profile image"
+                />
+              </Link>
+            )}
+          </motion.div>
         </div>
       </div>
     </div>
@@ -51,3 +78,24 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (session) {
+    const destination = context.query.destination || '/users/profile';
+
+    return {
+      redirect: {
+        destination,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+};

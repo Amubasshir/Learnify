@@ -24,26 +24,37 @@ const ProfilePage = ({ session }) => {
     return null;
   }
   return (
-    <div className="min-h-screen wrapper py-10 flex flex-col items-center ">
-      <Image
-        src={session.user.image}
-        alt={session.user.name}
-        width={50}
-        height={50}
-        className="h-20 w-20 rounded-full border-4 border-gray-700"
-      />
-      <h2 className="text-2xl mt-2">Welcome,{session.user.name}</h2>
-      <button
-        onClick={signOutWithGoogle}
-        className={
-          'flex gap-2 items-center bg-black text-white py-3 px-6 rounded-lg font-medium mt-10 hover:bg-gray-900 duration-300'
-        }
-      >
-        <span className="text-2xl">
-          <FiLogOut />
-        </span>
-        Sign Out
-      </button>
+    <div className="h-screen wrapper -mt-40 flex items-center justify-center mb-2 ">
+      <div className="flex-col gap-5 ">
+        <h2 className="text-2xl my-6">
+          Welcome,
+          <br />
+          {session.user.name}
+        </h2>
+        <Image
+          src={session.user.image}
+          alt={session.user.name}
+          width={50}
+          height={50}
+          className="h-20 w-20 rounded-lg border-4 border-gray-700"
+        />
+        <h3 className="text-xl font-medium pt-4 text-black/80">
+          Mobile: 01789745239
+        </h3>
+        <button
+          onClick={signOutWithGoogle}
+          className={
+            'flex gap-2 items-center bg-black text-white py-3 px-6 rounded-lg font-medium mt-10 hover:bg-gray-900 duration-300'
+          }
+        >
+          <span className="text-2xl">
+            <FiLogOut />
+          </span>
+          Sign Out
+        </button>
+      </div>
+
+      <div className=""></div>
     </div>
   );
 };

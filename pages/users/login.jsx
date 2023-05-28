@@ -43,7 +43,7 @@ const LoginPage = ({ session }) => {
           >
             <span>
               <FcGoogle />
-            </span>{' '}
+            </span>
             Sign in with Google
           </button>
         </div>

@@ -5,5 +5,5 @@
 @tailwind utilities;
 
 .wrapper {
-  @apply container mx-auto px-5 lg:px-0;
+  @apply container mx-auto px-10 lg:px-0;
 }
