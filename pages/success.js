@@ -28,6 +28,9 @@ const SuccessPage = ({ session }) => {
         </h2>
         <Button href="/orders" placeholder="Got to your orders" />
       </div>
+      <div className="flex items-center justify-center pt-5">
+        <img src="/learnify.png" alt="" />
+      </div>
     </div>
   );
 };
