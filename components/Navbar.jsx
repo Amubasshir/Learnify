@@ -17,7 +17,7 @@ const Navbar = () => {
           animate="to"
           transition={getTransition()}
         >
-          <Link href="/" className="text-white font-semibold">
+          <Link href="/" className="text-white text-lg font-serif font-bold">
             Learnify
           </Link>
         </motion.div>
@@ -26,7 +26,7 @@ const Navbar = () => {
           initial="from"
           animate="to"
           transition={getTransition()}
-          className="flex gap-5"
+          className="flex gap-5 text-lg font-semibold"
         >
           <Link href="/" className="hover:text-white transition-colors">
             Home
