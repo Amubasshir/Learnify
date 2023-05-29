@@ -1,4 +1,4 @@
-import Footer from 'componemt/components/Footer';
+import { Footer } from 'componemt/components/Footer';
 import Navbar from 'componemt/components/Navbar';
 import 'componemt/styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
