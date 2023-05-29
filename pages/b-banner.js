@@ -11,7 +11,7 @@ function BottomBanner() {
           className="border text-base font-medium px-5 py-2   border-[#1DBF73] bg-[#1DBF73] text-white rounded-md"
           type="button"
         >
-          Join Fiverr
+          Find Course
         </button>
       </div>
       <div className=" w-full h-96">
